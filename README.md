@@ -26,5 +26,8 @@
     2. Use terminal to test the code. 'python3 mutable_test.py -v'
     3. Upload the .py files and result of our programs to github.
 9. Conclusion:
-    
+    In immutable, it define the node class, and  all  operations on it are written outside class. 
+	For mutable, we define node structure and tree structure, functions are all in tree class
+    Immutable objects which state cannot be changed once they are created. Every time they are changed, 
+	new objects are generated. Mutable objects whose state can still be changed after creation
 
