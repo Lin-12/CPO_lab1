@@ -75,12 +75,20 @@ class TestImmutableList(unittest.TestCase):
         add(root1,4)
         self.assertEqual(to_list(root1),[1,2,3,4])
 
+    @given(st.lists(st.integers()))
+    def test_from_list_to_list_equality(self, a):
+        a = [1, 2, 3, 4]
+        self.assertEqual(to_list(from_list(a)), a)
 
+    @given(st.lists(st.integers()))
+    def test_monoid_identity(self, lst):
+        lst = [1, 2, 3, 4]
+        a = from_list(lst)
 
-
-
+        self.assertEqual(mconcat(mempty(), a), a)
+        self.assertEqual(mconcat(a, mempty()), a)
 
 
 
 if __name__ == '__main__':
-    unittest.main()
+ unittest.main()

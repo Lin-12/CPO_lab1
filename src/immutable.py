@@ -114,6 +114,12 @@ def to_list(root):
             stack.append(temp.right)
     return res
 
+def from_list(list):
+    root=binary_tree_node(list[0])
+    for i,j in enumerate(list[1:]):
+        add(root,j)
+    return  root
+
 def find_maxval(root,maxval=0):
     if root is None:
         return maxval
@@ -190,21 +196,21 @@ def get_parent(root, value):
 
 def delete(root, value):
     '''
-    从二叉树中删除一个元素
-    先获取 待删除节点 item 的父节点
-    如果父节点不为空，
-    判断 item 的左右子树
-    如果左子树为空，那么判断 item 是父节点的左孩子，还是右孩子，如果是左孩子，将父节点的左指针指向 item 的右子树，反之将父节点的右指针指向 item 的右子树
-    如果右子树为空，那么判断 item 是父节点的左孩子，还是右孩子，如果是左孩子，将父节点的左指针指向 item 的左子树，反之将父节点的右指针指向 item 的左子树
-    如果左右子树均不为空，寻找右子树中的最左叶子节点 x ，将 x 替代要删除的节点。
-    删除成功，返回 True
-    删除失败, 返回 False
+    Remove an element from the binary tree
+     First get the parent node of the node item to be deleted
+     If the parent node is not empty,
+     Determine the left and right subtrees of item
+     If the left subtree is empty, then determine whether item is the left child or the right child of the parent node. If it is a left child, point the left pointer of the parent node to the right subtree of the item, otherwise point the right pointer of the parent node to the right of item Subtree
+     If the right subtree is empty, then determine whether item is the left child or right child of the parent node. If it is a left child, point the left pointer of the parent node to the left child tree of item, otherwise, point the right pointer of the parent node to the left of item Subtree
+     If the left and right subtrees are not empty, find the leftmost leaf node x in the right subtree and replace x with the node to be deleted.
+     Delete successfully, return True
+     Delete failed, return False
     '''
-    if root is None:  # 如果根为空，就什么也不做
+    if root is None:
         return False
     parent = get_parent(root,value)
     if parent:
-        del_node = parent.left if parent.left.value == value else parent.right  # 待删除节点
+        del_node = parent.left if parent.left.value == value else parent.right
         if del_node.left is None:
             if parent.left.value == value:
                 parent.left = del_node.right
@@ -228,7 +234,7 @@ def delete(root, value):
                 tmp_next.left = del_node.left
                 tmp_next.right = del_node.right
             else:
-                while tmp_next.left:  # 让tmp指向右子树的最后一个叶子
+                while tmp_next.left:
                     tmp_pre = tmp_next
                     tmp_next = tmp_next.left
                 # 替代
@@ -258,3 +264,4 @@ print(mconcat(root0,root1))
 print(get_parent(root1,3))
 print(delete(root1,3))
 print(to_list(root1))
+print(to_list(from_list([1,2,3,4])))
