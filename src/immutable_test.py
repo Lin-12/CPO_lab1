@@ -69,19 +69,19 @@ class TestImmutableList(unittest.TestCase):
 
         self.assertEqual(preOrderTraverse(root1),[1,2])
     def test_tolist(self):
-        root1=binary_tree_node(1)
-        add(root1,2)
-        add(root1,3)
-        add(root1,4)
-        self.assertEqual(to_list(root1),[1,2,3,4])
+        root1=binary_tree_node(1,
+                                 binary_tree_node(2, binary_tree_node(3)),
+                                 binary_tree_node(4))
+
+        self.assertEqual(to_list(root1),[1,2,4,3])
 
     @given(st.lists(st.integers()))
-    def test_from_list_to_list_equality(self, a):
+    def test_from_list_to_list_equality(self):
         a = [1, 2, 3, 4]
         self.assertEqual(to_list(from_list(a)), a)
 
     @given(st.lists(st.integers()))
-    def test_monoid_identity(self, lst):
+    def test_monoid_identity(self):
         lst = [1, 2, 3, 4]
         a = from_list(lst)
 

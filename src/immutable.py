@@ -1,5 +1,5 @@
 class binary_tree_node(object):
-    def __init__(self,value=-1,left=None,right=None):
+    def __init__(self,value=None,left=None,right=None):
         self.value = value
         self.left = left
         self.right = right
@@ -170,17 +170,17 @@ def mconcat(node1,node2):
         return node2
     if node2 is None:
         return node1
-    node1.value = node1.value + node2.value  # 获得当前结点
-    node1.left = mconcat(node1.left, node2.left)  # 融合左子树
+    node1.value = node1.value + node2.value  # get current node
+    node1.left = mconcat(node1.left, node2.left)
     node1.right = mconcat(node1.right, node2.right)
     return node1
 
 def get_parent(root, value):
     '''
-    找到 value 的父节点
+    find value parent
     '''
     if root.value == value:
-        return None  # 根节点没有父节点
+        return None  # root has no parent
     tmp = [root]
     while tmp:
         pop_node = tmp.pop(0)
@@ -225,11 +225,11 @@ def delete(root, value):
                 parent.right = del_node.left
             del del_node
             return True
-        else:  # 左右子树都不为空
+        else:  # left and right all are not None
             tmp_pre = del_node
             tmp_next = del_node.right
             if tmp_next.left is None:
-                # 替代
+                # replace
                 tmp_pre.right = tmp_next.right
                 tmp_next.left = del_node.left
                 tmp_next.right = del_node.right
@@ -237,7 +237,7 @@ def delete(root, value):
                 while tmp_next.left:
                     tmp_pre = tmp_next
                     tmp_next = tmp_next.left
-                # 替代
+                # replace
                 tmp_pre.left = tmp_next.right
                 tmp_next.left = del_node.left
                 tmp_next.right = del_node.right
@@ -251,17 +251,3 @@ def delete(root, value):
         return False
 
 
-root0 = binary_tree_node(1)
-root1 = binary_tree_node(1, binary_tree_node(2,binary_tree_node(3)),binary_tree_node(4))
-print(im_size(root0))
-print(im_size(root1))
-print(preOrderTraverse(root1))
-print(find_maxval(root1))
-print(map(root1,f))
-print(fliter(root1,filter_func))
-print(reduce(root1,reduce_fuc))
-print(mconcat(root0,root1))
-print(get_parent(root1,3))
-print(delete(root1,3))
-print(to_list(root1))
-print(to_list(from_list([1,2,3,4])))
