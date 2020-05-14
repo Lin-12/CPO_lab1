@@ -99,6 +99,8 @@ def to_list(node,s,lst):
 """
 def to_list(root):
     res=[]
+    if root is None:
+        return res
     if root.value is None:
         return res
     stack=[root]
@@ -114,11 +116,30 @@ def to_list(root):
             stack.append(temp.right)
     return res
 
-def from_list(list):
-    root=binary_tree_node(list[0])
-    for i,j in enumerate(list[1:]):
-        add(root,j)
-    return  root
+def from_list(root, lst):
+    lst_copy = lst.copy()
+    j = 0
+    if len(lst) == 0:
+        root = None
+        return
+    elem = lst_copy.__getitem__(0)
+    lst_copy.pop(0)
+    root = binary_tree_node(elem, None, None)
+    queue = [root]
+
+    temp = binary_tree_node(None, None, None)
+    for e in lst_copy:
+        if j == 0:
+            temp = queue.pop()
+            temp.left = binary_tree_node(e, None, None)
+            queue.append(temp.left)
+            j = 1
+            continue
+        if j == 1:
+            temp.right = binary_tree_node(e, None, None)
+            queue.append(temp.right)
+            j = 0
+    return root
 
 def find_maxval(root,maxval=0):
     if root is None:
@@ -170,6 +191,8 @@ def mconcat(node1,node2):
         return node2
     if node2 is None:
         return node1
+    if node1 is None and node2 is None:
+        return None
     node1.value = node1.value + node2.value  # get current node
     node1.left = mconcat(node1.left, node2.left)
     node1.right = mconcat(node1.right, node2.right)
@@ -250,4 +273,7 @@ def delete(root, value):
     else:
         return False
 
+def iterator(root):
+    ls=to_list(root)
+    return iter(ls)
 
