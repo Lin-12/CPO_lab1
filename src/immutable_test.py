@@ -76,17 +76,49 @@ class TestImmutableList(unittest.TestCase):
         self.assertEqual(to_list(root1),[1,2,4,3])
 
     @given(st.lists(st.integers()))
-    def test_from_list_to_list_equality(self):
-        a = [1, 2, 3, 4]
-        self.assertEqual(to_list(from_list(a)), a)
+    def test_from_list_to_list_equality(self,a):
+        #a = [1, 2, 3, 4]
+        b1=binary_tree_node()
+        self.assertEqual(to_list(from_list(b1,a)), a)
 
     @given(st.lists(st.integers()))
-    def test_monoid_identity(self):
-        lst = [1, 2, 3, 4]
-        a = from_list(lst)
+    def test_monoid_identity(self,lst):
+        #lst = [1, 2, 3, 4]
+        b1=binary_tree_node()
+        a = from_list(b1,lst)
 
         self.assertEqual(mconcat(mempty(), a), a)
         self.assertEqual(mconcat(a, mempty()), a)
+    @given(a=st.lists(st.integers()),b=st.lists(st.integers()),c=st.lists(st.integers()))
+    def test_monoid_associativity(self,a,b,c):
+        a1 = binary_tree_node()
+        b1 = binary_tree_node()
+        c1 = binary_tree_node()
+        #(a+b)+c
+        a12=from_list(a1,a)
+        b12=from_list(b1,b)
+        c12=from_list(c1,c)
+        x1=mconcat(mconcat(a12,b12),c12)
+        #a+(b+c)
+        x2=mconcat(a12,mconcat(b12,c12))
+        self.assertEqual(x1,x2)
+
+    def test_iterator(self):
+        root1 = binary_tree_node(1,
+                                 binary_tree_node(2, binary_tree_node(3)),
+                                 binary_tree_node(4))
+        iterl=[]
+        x=iterator(root1)
+        while True:
+            try:
+                y=next(x)
+                iterl.append(y)
+            except StopIteration:
+                break
+        self.assertEqual(iterl,[1,2,4,3])
+
+
+
 
 
 
