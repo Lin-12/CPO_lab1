@@ -104,22 +104,20 @@ class TestImmutableList(unittest.TestCase):
         self.assertEqual(x1,x2)
 
     def test_iterator(self):
-        root1 = binary_tree_node(1,
-                                 binary_tree_node(2, binary_tree_node(3)),
-                                 binary_tree_node(4))
-        iterl=[]
-        x=iterator(root1)
-        while True:
-            try:
-                y=next(x)
-                iterl.append(y)
-            except StopIteration:
-                break
-        self.assertEqual(iterl,[1,2,4,3])
-
-
-
-
+        x = [1, 2, 3]
+        root = binary_tree_node()
+        root= from_list(root, x)
+        tmp = []
+        try:
+            get_next = iterator(root)
+            while True:
+                tmp.append(get_next())
+        except StopIteration:
+            pass
+        self.assertEqual(x, tmp)
+        self.assertEqual(to_list(root), tmp)
+        get_next = iterator(None)
+        self.assertRaises(StopIteration, lambda: get_next())
 
 
 if __name__ == '__main__':

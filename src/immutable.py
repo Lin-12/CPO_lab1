@@ -274,6 +274,21 @@ def delete(root, value):
         return False
 
 def iterator(root):
-    ls=to_list(root)
-    return iter(ls)
+    cur = root
+    node_queue = list()
+    node_queue.append(cur)
+
+    def foo():
+        nonlocal cur
+        if len(node_queue) == 0 or cur is None:
+            raise StopIteration
+            #return
+        cur = node_queue.pop(0)
+        if cur.left is not None:
+            node_queue.append(cur.left)
+        if cur.right is not None:
+            node_queue.append(cur.right)
+        tmp = cur.value
+        return tmp
+    return foo
 

@@ -33,6 +33,7 @@
     3. Upload the .py files and result of our programs to github.
 ![avatar](./fig/immutable_test.png)
 ![avatar](./fig/mutable_result.png)
+![avatar](./fig/immutable_result.png)
 
 9. Conclusion:
     design binary trees in mutable and immutable ways, we realize the function of add new element,remove element,size of the tree
